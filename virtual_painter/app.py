@@ -1,3 +1,4 @@
+import os
 import cv2
 import numpy as np
 import mediapipe as mp
@@ -112,6 +113,14 @@ while True:
         break
     elif key == ord('c'):
         canvas = np.ones_like(frame) * 255  # Clear canvas
+    elif key == ord('s'):  # Press 's' to save the drawing
+        save_path = '../assets/saved_drawings'
+        os.makedirs(save_path, exist_ok=True)
+        import datetime
+        filename = datetime.datetime.now().strftime("%Y%m%d_%H%M%S") + '.png'
+        full_path = os.path.join(save_path, filename)
+        cv2.imwrite(full_path, canvas)
+        print(f"Drawing saved at: {full_path}")
 
 cap.release()
 cv2.destroyAllWindows()
